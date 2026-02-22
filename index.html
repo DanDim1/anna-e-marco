@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anna & Marco · Pre-Wedding</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --bg2: #111111;
+    --gold: #c9a96e;
+    --gold-light: #e2c99a;
+    --white: #f5f0e8;
+    --grey: #555;
+    --line: rgba(201,169,110,0.25);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Geometric background */
+  .geo-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    overflow: hidden;
+  }
+  .geo-bg svg { width: 100%; height: 100%; opacity: 0.07; }
+
+  .page {
+    position: relative; z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 60px 0 50px;
+    animation: fadeUp 1s ease both;
+  }
+  .label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 14vw, 96px);
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .names span { color: var(--gold); font-style: italic; }
+  .amp {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.55em;
+    color: var(--gold);
+    font-style: italic;
+    display: block;
+    margin: 4px 0;
+  }
+  .pre-tag {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--grey);
+    text-transform: uppercase;
+    margin-top: 24px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 40px 0;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+  .diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 48px;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+  .info-cell {
+    background: var(--bg);
+    padding: 24px 20px;
+    text-align: center;
+  }
+  .info-cell .ico {
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--gold);
+  }
+  .info-cell .val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.2;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .info-cell .lbl {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
+  /* ── MESSAGE ── */
+  .message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold-light);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 56px;
+    padding: 0 16px;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  /* ── RSVP FORM ── */
+  .rsvp-wrap {
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .rsvp-title {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .form-box {
+    border: 1px solid var(--line);
+    padding: 36px 32px;
+    background: var(--bg2);
+    position: relative;
+  }
+  /* corner accents */
+  .form-box::before, .form-box::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .form-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .form-box::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .field { margin-bottom: 24px; }
+  label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  input, textarea, select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    padding: 10px 0;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-bottom-color: var(--gold);
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--grey);
+    font-size: 12px;
+  }
+  select option { background: #1a1a1a; color: var(--white); }
+  textarea { resize: vertical; min-height: 70px; }
+
+  /* presence toggle */
+  .presence-group {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .pres-btn {
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--grey);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pres-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .pres-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #0d0d0d;
+  }
+
+  /* ospiti counter */
+  .counter-row {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .cnt-btn {
+    width: 36px; height: 36px;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--gold);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    font-family: 'DM Mono', monospace;
+  }
+  .cnt-btn:hover { background: var(--gold); color: #0d0d0d; border-color: var(--gold); }
+  .cnt-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--white);
+    min-width: 40px;
+    text-align: center;
+  }
+  .cnt-label { font-size: 9px; letter-spacing: 0.2em; color: var(--grey); text-transform: uppercase; }
+
+  /* submit */
+  .submit-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    padding: 18px;
+    cursor: pointer;
+    margin-top: 32px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.35s ease;
+    z-index: 0;
+  }
+  .submit-btn:hover::after { transform: translateX(0); }
+  .submit-btn:hover { color: #0d0d0d; }
+  .submit-btn span { position: relative; z-index: 1; }
+
+  /* ── SUCCESS ── */
+  .success {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+    border: 1px solid var(--line);
+    background: var(--bg2);
+    animation: fadeUp 0.6s ease both;
+  }
+  .success .check {
+    font-size: 40px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 20px;
+  }
+  .success h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .success p {
+    font-size: 12px;
+    color: var(--grey);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 500px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .form-box { padding: 28px 20px; }
+    .names { font-size: clamp(52px, 18vw, 80px); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Geometric SVG background -->
+<div class="geo-bg">
+  <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="500,50 950,275 950,725 500,950 50,725 50,275" fill="none" stroke="#c9a96e" stroke-width="1"/>
+    <polygon points="500,120 880,310 880,690 500,880 120,690 120,310" fill="none" stroke="#c9a96e" stroke-width="0.5"/>
+    <line x1="50" y1="275" x2="950" y2="725" stroke="#c9a96e" stroke-width="0.4"/>
+    <line x1="950" y1="275" x2="50" y2="725" stroke="#c9a96e" stroke-width="0.4"/>
+    <line x1="500" y1="50" x2="500" y2="950" stroke="#c9a96e" stroke-width="0.4"/>
+    <circle cx="500" cy="500" r="300" fill="none" stroke="#c9a96e" stroke-width="0.5"/>
+    <circle cx="500" cy="500" r="150" fill="none" stroke="#c9a96e" stroke-width="0.5"/>
+    <rect x="200" y="200" width="600" height="600" fill="none" stroke="#c9a96e" stroke-width="0.4" transform="rotate(45 500 500)"/>
+  </svg>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="label">Siete invitati a celebrare</p>
+    <div class="names">
+      <span>Anna</span>
+      <span class="amp">&</span>
+      <span>Marco</span>
+    </div>
+    <p class="pre-tag">Pre · Wedding · Aperitivo</p>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="divider"><div class="diamond"></div></div>
+
+  <!-- INFO -->
+  <div class="info-grid">
+    <div class="info-cell">
+      <span class="ico">◇</span>
+      <span class="val">25 Agosto<br>2025</span>
+      <span class="lbl">Data</span>
+    </div>
+    <div class="info-cell">
+      <span class="ico">◇</span>
+      <span class="val">18:00</span>
+      <span class="lbl">Orario</span>
+    </div>
+    <div class="info-cell">
+      <span class="ico">◇</span>
+      <span class="val">La Canonica<br>degli Archi</span>
+      <span class="lbl">Location</span>
+    </div>
+  </div>
+
+  <!-- MESSAGE -->
+  <p class="message">
+    Prima del grande giorno, vogliamo condividere con voi<br>
+    un momento speciale — tra brindisi, sorrisi<br>
+    e tutto l'amore che ci circonda.
+  </p>
+
+  <!-- RSVP -->
+  <div class="rsvp-wrap">
+    <p class="rsvp-title">Conferma la tua presenza · RSVP</p>
+
+    <div class="form-box" id="formBox">
+
+      <!-- Nome -->
+      <div class="field">
+        <label>Nome e Cognome</label>
+        <input type="text" id="nome" placeholder="Il tuo nome completo" required>
+      </div>
+
+      <!-- Presenza -->
+      <div class="field">
+        <label>Partecipi?</label>
+        <div class="presence-group">
+          <button class="pres-btn" id="btnSi" type="button" onclick="setPresence('si')">
+            ✓ &nbsp; Sì, ci sarò
+          </button>
+          <button class="pres-btn" id="btnNo" type="button" onclick="setPresence('no')">
+            ✗ &nbsp; Non potrò esserci
+          </button>
+        </div>
+      </div>
+
+      <!-- Numero ospiti (visibile solo se sì) -->
+      <div class="field" id="guestField" style="display:none">
+        <label>Numero di ospiti (incluso te)</label>
+        <div class="counter-row">
+          <button class="cnt-btn" type="button" onclick="changeCount(-1)">−</button>
+          <span class="cnt-val" id="guestCount">1</span>
+          <button class="cnt-btn" type="button" onclick="changeCount(1)">+</button>
+          <span class="cnt-label">persone</span>
+        </div>
+      </div>
+
+      <!-- Intolleranze (visibile solo se sì) -->
+      <div class="field" id="intoleranceField" style="display:none">
+        <label>Intolleranze o allergie alimentari</label>
+        <textarea id="intolleranze" placeholder="Es. glutine, lattosio, frutta secca… oppure lascia vuoto se nessuna"></textarea>
+      </div>
+
+      <button class="submit-btn" type="button" onclick="submitRSVP()">
+        <span>Invia conferma</span>
+      </button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success" id="successBox">
+      <span class="check">◇</span>
+      <h3 id="successTitle">Grazie mille!</h3>
+      <p id="successMsg">La tua risposta è stata registrata.<br>Non vediamo l'ora di vederti il 25 agosto.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="divider" style="margin-bottom:20px"><div class="diamond"></div></div>
+    Per informazioni: <a href="/cdn-cgi/l/email-protection#58" style="color:var(--gold); text-decoration:none"><span class="__cf_email__" data-cfemail="3e5f50505f18535f4c5d517e5b4d5b534e5751105d5153">[email&#160;protected]</span></a>
+  </div>
+
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  let presence = null;
+  let guestCount = 1;
+
+  function setPresence(val) {
+    presence = val;
+    document.getElementById('btnSi').classList.toggle('active', val === 'si');
+    document.getElementById('btnNo').classList.toggle('active', val === 'no');
+    document.getElementById('guestField').style.display = val === 'si' ? 'block' : 'none';
+    document.getElementById('intoleranceField').style.display = val === 'si' ? 'block' : 'none';
+  }
+
+  function changeCount(delta) {
+    guestCount = Math.max(1, Math.min(10, guestCount + delta));
+    document.getElementById('guestCount').textContent = guestCount;
+  }
+
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSdI-Fsb3so2yFsZO13m_bOPttkMmdEM0eHu-KqxjyQBSuEuKA/formResponse';
+  const ENTRY = {
+    nome:       'entry.729174623',
+    presenza:   'entry.1539334211',
+    ospiti:     'entry.1839378361',
+    intolleranze: 'entry.1328791695'
+  };
+
+  function submitRSVP() {
+    const nome = document.getElementById('nome').value.trim();
+    if (!nome) { alert('Inserisci il tuo nome per procedere.'); return; }
+    if (!presence) { alert('Seleziona se partecipi o meno.'); return; }
+
+    // Invia dati a Google Form in background (no-cors)
+    const presenzaVal = presence === 'si' ? 'Sì, ci sarò' : 'Non potrò esserci';
+    const ospiti = presence === 'si' ? String(guestCount) : '0';
+    const intolleranze = presence === 'si' ? (document.getElementById('intolleranze').value.trim() || 'Nessuna') : '-';
+
+    const body = new URLSearchParams({
+      [ENTRY.nome]:         nome,
+      [ENTRY.presenza]:     presenzaVal,
+      [ENTRY.ospiti]:       ospiti,
+      [ENTRY.intolleranze]: intolleranze
+    });
+
+    fetch(FORM_ACTION, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    }).catch(() => {}); // ignora errori CORS (il dato viene comunque registrato)
+
+    document.getElementById('formBox').style.display = 'none';
+    const sb = document.getElementById('successBox');
+    sb.style.display = 'block';
+
+    if (presence === 'si') {
+      document.getElementById('successTitle').textContent = 'Ci vediamo il 25! 🥂';
+      document.getElementById('successMsg').innerHTML =
+        `Perfetto <strong style="color:var(--gold)">${nome}</strong>, registrati ${guestCount} ${guestCount === 1 ? 'persona' : 'persone'}.<br>Non vediamo l'ora di festeggiare insieme!`;
+    } else {
+      document.getElementById('successTitle').textContent = 'Ci mancherai!';
